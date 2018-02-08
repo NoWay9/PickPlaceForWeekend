@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="author" content="Liubomyr Struk">
+  <title>Pick place</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.6/angular-material.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-animate.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-aria.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-messages.min.js"></script>
+
+
+</head>
+
+<body>
+  <div class="capitals-list" ng-controller="weatherCtrl" ng-style="{'background': slide, 'transition':'all 10s linear'}">
+    <h1>{{header}}</h1>
+    <div class="dialog-demo-content" layout="row" layout-wrap layout-margin layout-align="center">
+      <md-button class="md-primary md-raised" ng-click="showPrompt($event)">
+        Add city
+      </md-button>
+      <md-button class="md-raised md-primary" ng-click="saveSelected()">Save selected city</md-button>
+      <md-button class="md-raised md-primary" ng-click="toDefault()"> To Default</md-button>
+      <md-button class="md-raised md-primary" ng-click="sortBy = 'wantVisit || visited'">Sort by Neutral</md-button>
+    </div>
+    <table>
+      <caption>List of European capitals</caption>
+      <tr>
+        <th ng-click="sortBy = 'visited'">Visited</th>
+        <th ng-click="sortBy = 'wantVisit'">Wish to visit</th>
+        <th>Remove</th>
+        <th ng-click="sortBy = 'name'">Name</th>
+        <th ng-click="sortBy = 'currentWeather'">Temperature</th>
+        <th ng-click="sortBy = 'maxTemp'">Max Temp</th>
+        <th ng-click="sortBy = 'minTemp'">Min Temp</th>
+        <th ng-click="sortBy = 'humidity'">Humidity</th>
+        <th ng-click="sortBy = 'pressure'">Pressure</th>
+      </tr>
+      <tr ng-repeat="capital in capitals | orderBy:'currentWeather' | orderBy: sortBy " ng-class="{blue: $first, red: $last, grey:capital.visited, purple:capital.wantVisit}">
+        <td>
+          <input type="checkbox" ng-model="capital.visited">
+        </td>
+        <td>
+          <input type="checkbox" ng-model="capital.wantVisit">
+        </td>
+        <td>
+          <button class="delete-item" ng-click="deleteItem(capital)">X</button>
+        </td>
+        <td>{{capital.name}}</td>
+        <td>{{capital.currentWeather + '°C'}}</td>
+        <td>{{capital.maxTemp + '°C'}}</td>
+        <td>{{capital.minTemp + '°C'}}</td>
+        <td>{{capital.humidity + '%'}}</td>
+        <td>{{capital.pressure + 'mm'}}</td>
+      </tr>
+    </table>
+
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.6/angular-material.min.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
